@@ -12,11 +12,33 @@ var winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7]
 
 //onload
 window.onload = function () {
-    startGame(1);
-    updateGrid();
+    // startGame(1);
 }
 
-function startGame(Mode) {
+function startGame(Mode=-1) {
+    // set the checked radio button value of the difficulty
+    var radios = document.getElementsByName("difficulty");
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            difficulty = i;
+            break;
+        }
+    }
+
+    if (Mode == -1) {
+        // set the checked radio button value of the mode
+        var radios = document.getElementsByName("players");
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                Mode = 1-i;
+                break;
+            }
+        }
+    }
+        
+    // hide start and show game
+    document.getElementById("start").style.display = "none";
+    document.getElementById("game").style.display = "block";
     gamestate = 1;
     winner = -1;
     mode = Mode;
@@ -30,6 +52,7 @@ function startGame(Mode) {
     if (turn == 1) {
         computerMove();
     }
+    updateGrid();
 }
 
 function computerMove() {
