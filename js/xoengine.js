@@ -83,14 +83,24 @@ function startGame(Mode=-1) {
     for (var i = 0; i < 9; i++) {
         grid[i] = 0;
     }
-    if (turn == 1) {
+    if (turn == 1 && mode == 1) {
         computerMove();
     }
     updateGrid();
 }
 
-function computerMove() {
-        console.log(grid);
+async function computerMove() {
+    console.log(grid);
+    // wait for 2 seconds
+    var thinkpic = document.getElementById("thinkpic");
+    var pic = Math.floor(Math.random() * 4) + 1;
+    document.getElementById("message").innerHTML = "O's Turn: I'm thinking...";
+    thinkpic.style.display = "block";
+    thinkpic.src = "images/think" + pic + ".jpg";
+    
+    await delay(2000);
+    thinkpic.style.display = "none";
+
     if (mode == 1) {
         if (recentMoves.length < 3){
             move = Math.floor(Math.random() * 5) * 2;
@@ -369,7 +379,11 @@ function updateGrid(){
         }
     } else {
         if (turn == 1) {
-            document.getElementById("message").innerHTML = "O's turn";
+            var message = "O's turn";
+            if (mode == 1) {
+                message += ": I'm thinking...";
+            }
+            document.getElementById("message").innerHTML = message;
         } else {
             document.getElementById("message").innerHTML = "X's turn";
         }
@@ -381,4 +395,8 @@ function updateGrid(){
 function newGame() {
     startGame(mode);
     updateGrid();
+}
+
+async function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -197,14 +197,32 @@
 
           <div class="row">
             <div class="col">
-              <h4 style="padding-left: 2rem">
-                Player 1: <span style="color: brown">X</span>, wins:
+              <p
+                style="
+                  padding-left: 0.2rem;
+                  border: 1px solid black;
+                  border-radius: 5px;
+                  font-size: min(5vw, 20px);
+                  font-weight: bold;
+                "
+              >
+                Player 1: <span style="color: brown">X</span>,<br />
+                wins:
                 <span id="score1">0</span>
-              </h4>
-              <h4 style="padding-left: 2rem">
-                Player 2: <span style="color: darkcyan">O</span>, wins:
+              </p>
+              <p
+                style="
+                  padding-left: 0.2rem;
+                  border: 1px solid black;
+                  border-radius: 5px;
+                  font-size: min(5vw, 20px);
+                  font-weight: bold;
+                "
+              >
+                Player 2: <span style="color: darkcyan">O</span>,<br />
+                wins:
                 <span id="score2">0</span>
-              </h4>
+              </p>
             </div>
             <div class="col">
               <button
@@ -214,6 +232,14 @@
               >
                 Reset Game
               </button>
+            </div>
+            <div class="col">
+              <img
+                id="thinkpic"
+                src="images/think1.jpg"
+                alt="thinking"
+                style="display: none; width: max(10vw, 100px)"
+              />
             </div>
           </div>
           <br />
