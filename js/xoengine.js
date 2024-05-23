@@ -12,7 +12,7 @@ var winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7]
 
 //onload
 window.onload = function () {
-    startGame(0);
+    startGame(1);
     updateGrid();
 }
 
@@ -22,17 +22,27 @@ function startGame(Mode) {
     mode = Mode;
     //randomly choose who starts
     turn = Math.floor(Math.random() * 2);
+    console.log(turn);
     recentMoves = [];
     for (var i = 0; i < 9; i++) {
         grid[i] = 0;
     }
-    if (turn == 0) {
+    if (turn == 1) {
         computerMove();
     }
 }
 
 function computerMove() {
+        console.log(grid);
     if (mode == 1) {
+        if (recentMoves.length < 3){
+            move = Math.floor(Math.random() * 5) * 2;
+            while (grid[move] != 0) {
+                move = Math.floor(Math.random() * 9);
+            }
+            addMove(move);
+            return;
+        }
         var correctnessPercentage = 0;
         if (difficulty == 0) {
             correctnessPercentage = 0.4;
@@ -41,23 +51,129 @@ function computerMove() {
         } else {
             correctnessPercentage = 0.99;
         }
-        // choose
+        // choose 
+        var best = getBestMove(0, 1, grid.slice(), -1, recentMoves.slice());
 
+        var cell = best[0];
+        if (cell == -1) {
+            // random move
+            cell = Math.floor(Math.random() * 9);
+            while (grid[cell] != 0) {
+                cell = Math.floor(Math.random() * 9);
+            }
+        } 
+        else if (grid[cell] != 0 && !(recentMoves.length > 5 && (recentMoves[0] == cell || recentMoves[1] == cell))) {
+            // random move
+            var cell = Math.floor(Math.random() * 9);
+            while (grid[cell] != 0) {
+                cell = Math.floor(Math.random() * 9);
+            }
+        }
+        console.log("best move: " + cell);
+        addMove(cell);
 
-
-
-        turn = 1 - turn;
+        // turn = 1 - turn;
     }
 }
+
+function ArrayToOneString(arr){return arr.join('');}
+
+var dp = new Map();
+
+function getBestMove(depth, player, grid, original = -1, recentmoves) {
+    // 1 is Computer, 0 is Human
+    var key = ArrayToOneString(grid);
+    // if (dp.has(key)) {
+    //     return dp.get(key);
+    // }
+    if (depth > 100) return [-1, depth];
+
+    // brute force
+    var winner = getWinner(grid);
+    if (winner == 1) {
+        // return a pair of (score, depth)
+        dp.set(key, 1);
+        return [original, depth];
+    } else if (winner == 0) {
+        dp.set(key, -1);
+        return [-1, depth];
+    }
+    // Check if the grid is full
+    if (!grid.includes(0)) {return [-1, depth];}
+
+    var min = [-1, 1000];
+// try to stop the player from winning
+    // add the move to the grid
+    var tempmoves = recentmoves.slice();
+    var tempgrid = grid.slice();
+    if (recentmoves.length > 4) {
+        tempgrid[recentmoves.shift()] = 0;
+    }if (recentmoves.length > 4) {
+        tempgrid[recentmoves.shift()] = 0;
+    }
+
+    // check if the player is about to win
+    if (tempgrid[4] == 1 && tempgrid[6] == 1) console.log("interesting");
+    for (var i = 0; i < 9; i++) {
+        if (tempgrid[i] == 0
+            || (tempmoves.length > 5 &&((tempmoves.length > 0 && i == tempmoves[0]) || (tempmoves.length > 1 && i == tempmoves[1])))
+        ) {
+            var newGrid = tempgrid.slice();
+            var newRecentMoves = tempmoves.slice();
+            newRecentMoves.push(i);
+            if (newRecentMoves.length > 6) {
+                newRecentMoves.shift();
+            }
+            newGrid[i] = 1;
+            var winner = getWinner(newGrid);
+            if (winner == 0) {
+                min = [i, depth];
+                // console.log("found a move to stop the player from winning");
+                break;
+            }
+        }
+    }
+    if (min[0] == -1) {
+        for (var i = 0; i < 9; i++) {
+            if (grid[i] == 0 
+                //|| (recentmoves.length > 0 && i == recentmoves[0]) || (recentmoves.length > 1 && i == recentmoves[1])
+            ) {
+                var newGrid = grid.slice();
+                var newRecentMoves = recentmoves.slice();
+                newRecentMoves.push(i);
+                if (newRecentMoves.length > 6) {
+                    newRecentMoves.shift();
+                }
+                newGrid[i] = player + 1;
+
+                var moveScore = getBestMove(depth + 1, 1 - player, newGrid, original == -1 ? i : original, newRecentMoves);
+                if (moveScore[0] > 0) {
+                    if (moveScore[1] < min[1] ) {
+                        min = moveScore;
+                    }
+                }
+            }
+        }
+    }
+
+    dp.set(key, min);
+    return min;
+}
+
+
 
             
 
 function addMove(cell) {
-    if (gamestate == 1 && ( grid[cell] == 0 
-        || (recentMoves.length > 0 && cell == recentMoves[0]) || (recentMoves.length > 1 && cell == recentMoves[1]))) {
+    if (gamestate == 1 && 
+        ( 
+            grid[cell] == 0 
+            ||(recentMoves.length > 5 && grid[cell] == turn+1 && (cell == recentMoves[0] || cell == recentMoves[1]))
+        )) {
         recentMoves.push(cell);
         if (recentMoves.length > 6) {
             var num = recentMoves.shift();
+            console.log("removed move " + num + " " + (grid[num] == 1 ? "X" : "O"));
             // remove the oldest move
             grid[num] = 0;
         }
@@ -70,6 +186,28 @@ function addMove(cell) {
         }
         updateGrid();
     }
+}
+function getWinner(grid) {
+    for (var i = 0; i < 8; i++) {
+        var a = winningCombinations[i][0];
+        var b = winningCombinations[i][1];
+        var c = winningCombinations[i][2];
+        if (grid[a] != 0 && grid[a] == grid[b] && grid[b] == grid[c]) {
+            return grid[a] - 1;
+        }
+    }
+
+    var draw = true;
+    for (var i = 0; i < 9; i++) {
+        if (grid[i] == 0) {
+            draw = false;
+            break;
+        }
+    }
+    if (draw) {
+        return 3;
+    }
+    return -1;
 }
 
 function checkWinner() {
