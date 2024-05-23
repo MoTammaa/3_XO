@@ -18,7 +18,10 @@
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <!-- make font adaptive to width-->
-          <a class="navbar-brand" href="#" style="font-size: min(10vw, 32px)"
+          <a
+            class="navbar-brand"
+            href="javascript:mainMenu();"
+            style="font-size: min(10vw, 32px)"
             >3 <span style="color: brown">X</span
             ><span style="color: darkcyan">O</span></a
           >
@@ -36,13 +39,17 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="javascript:mainMenu();"
+                  ><span style="color: brown">Main Menu</span></a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Options</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="javascript:howToPlay();"
+                  ><span style="color: darkcyan">How To Play</span></a
+                >
               </li>
               <!-- <li class="nav-item">
                 <a class="nav-link disabled" aria-disabled="true">Disabled</a>
@@ -61,15 +68,17 @@
         </h1>
         <br />
 
+        <p
+          style="padding-right: 2rem; display: block; font-size: min(5vw, 20px)"
+        >
+          Choose Number of Players:
+        </p>
         <div
           class="btn-group"
           role="group"
           aria-label="Basic radio toggle button group"
-          style="padding: 2rem"
+          style="padding-left: 2rem"
         >
-          <h4 style="padding-right: 2rem; display: block">
-            Choose Number of Players:
-          </h4>
           <br />
           <input
             type="radio"
@@ -79,7 +88,10 @@
             autocomplete="off"
             checked
           />
-          <label class="btn btn-outline-success" for="btnradio1"
+          <label
+            class="btn btn-outline-success"
+            for="btnradio1"
+            style="font-size: min(5vw, 16px)"
             >1 Player</label
           >
 
@@ -90,25 +102,35 @@
             id="btnradio2"
             autocomplete="off"
           />
-          <label class="btn btn-outline-success" for="btnradio2"
+          <label
+            class="btn btn-outline-success"
+            for="btnradio2"
+            style="font-size: min(5vw, 16px)"
             >2 Players</label
           >
         </div>
-        <div>
+        <div style="padding-top: 0.5rem; padding-bottom: 0.75rem">
           Player 1: <span style="color: brown">X</span>, Player 2:
           <span style="color: darkcyan">O</span>
         </div>
 
         <!-- difficulty -->
+        <p
+          style="
+            padding-right: 2rem;
+            padding-top: 1rem;
+            display: block;
+            font-size: min(5vw, 20px);
+          "
+        >
+          Choose Difficulty:
+        </p>
         <div
           class="btn-group"
           role="group"
           aria-label="Basic radio toggle button group"
-          style="padding: 2rem"
+          style="padding-left: 1rem; padding-bottom: 1rem"
         >
-          <h4 style="padding-right: 2rem; display: block">
-            Choose Difficulty:
-          </h4>
           <br />
           <input
             type="radio"
@@ -118,7 +140,12 @@
             autocomplete="off"
             checked
           />
-          <label class="btn btn-outline-success" for="btnradio3">Easy</label>
+          <label
+            class="btn btn-outline-success"
+            for="btnradio3"
+            style="font-size: min(5vw, 16px)"
+            >Easy</label
+          >
 
           <input
             type="radio"
@@ -127,7 +154,12 @@
             id="btnradio4"
             autocomplete="off"
           />
-          <label class="btn btn-outline-warning" for="btnradio4">Medium</label>
+          <label
+            class="btn btn-outline-warning"
+            for="btnradio4"
+            style="font-size: min(5vw, 16px)"
+            >Medium</label
+          >
 
           <input
             type="radio"
@@ -136,7 +168,12 @@
             id="btnradio5"
             autocomplete="off"
           />
-          <label class="btn btn-outline-danger" for="btnradio5">Hard</label>
+          <label
+            class="btn btn-outline-danger"
+            for="btnradio5"
+            style="font-size: min(5vw, 16px)"
+            >Hard</label
+          >
         </div>
         <br />
 
@@ -174,7 +211,7 @@
                 class="btn btn-primary"
                 style="margin-left: 2rem"
               >
-                New Game
+                Reset Game
               </button>
             </div>
           </div>
@@ -271,10 +308,62 @@
           </div>
         </div>
       </div>
+
+      <!--How To Play-->
+      <div id="howto" class="container text-center" style="padding: 2rem">
+        <h1>
+          Welcome to 3 <span style="color: brown">X</span
+          ><span style="color: darkcyan">O</span>
+        </h1>
+        <p>
+          This is a simple game of Tic-Tac-Toe. The game is played on a 3x3 grid
+          where two players take turns to place their mark (either X or O) on an
+          empty cell. The player who succeeds in placing three of their marks in
+          a horizontal, vertical, or diagonal row wins the game.
+        </p>
+        <p>
+          However, there is a twist in this game. Each player has a limited
+          number of symbols to place on the board (either X or O). Each player
+          has 3 X's or 3 O's to place on the board. When a player places all 3
+          of their symbols on the board, the oldest symbol is removed and the
+          player can place a new symbol on the board. The oldest symbol that
+          will be removed is marked with a darker color and an asterisk (*).
+        </p>
+        <p>
+          In this variant of Tic-Tac-Toe, there are no draws. The game will
+          continue until one player wins. So, you need to concentrate and choose
+          your moves wisely!
+        </p>
+        <p>Good luck and have fun!</p>
+        <span id="onetime" style="color: dimgray; font-size: small"
+          >These instructions will show up the first time only... to view again
+          enter the "How To Play" menu in the Navigation Bar</span
+        >
+
+        <button
+          id="returnToGame"
+          onclick="returnToGame();"
+          class="btn btn-primary"
+          style="margin-left: 2rem; display: none"
+        >
+          Return to Game
+        </button>
+      </div>
     </main>
 
     <footer>
-      <!-- Add your footer content here -->
+      <br />
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <p class="text-center" style="width: 100%">
+            3 <span style="color: brown">X</span
+            ><span style="color: darkcyan">O</span>
+          </p>
+          <p class="text-center" style="width: 100%">
+            &copy; 2024 Mohamed Ayman Tammaa. All Rights Reserved.
+          </p>
+        </div>
+      </nav>
     </footer>
 
     <!-- Include Bootstrap JS -->

@@ -15,6 +15,36 @@ window.onload = function () {
     // startGame(1);
 }
 
+function mainMenu(){
+    document.getElementById("returnToGame").style.display = "block";
+    document.getElementById("onetime").style.display = "none";
+    document.getElementById("start").style.display = "block";
+    document.getElementById("game").style.display = "none";
+    document.getElementById("howto").style.display = "none";
+    gamestate = 0;
+}
+
+function howToPlay(){
+    document.getElementById("start").style.display = "none";
+    document.getElementById("game").style.display = "none";
+    document.getElementById("howto").style.display = "block";
+    document.getElementById("returnToGame").style.display = "block";
+    document.getElementById("onetime").style.display = "none";
+}
+
+function returnToGame(){
+    if(gamestate == 0) {
+        mainMenu();
+    } else {
+        document.getElementById("start").style.display = "none";
+        document.getElementById("game").style.display = "block";
+        document.getElementById("howto").style.display = "none";
+        document.getElementById("returnToGame").style.display = "block";
+        document.getElementById("onetime").style.display = "none";
+    }
+}
+
+
 function startGame(Mode=-1) {
     // set the checked radio button value of the difficulty
     var radios = document.getElementsByName("difficulty");
@@ -36,9 +66,13 @@ function startGame(Mode=-1) {
         }
     }
         
-    // hide start and show game
+    // hide start, howto and show game
+    document.getElementById("returnToGame").style.display = "block";
+    document.getElementById("onetime").style.display = "none";
     document.getElementById("start").style.display = "none";
+    document.getElementById("howto").style.display = "none";
     document.getElementById("game").style.display = "block";
+
     gamestate = 1;
     winner = -1;
     mode = Mode;
@@ -72,7 +106,7 @@ function computerMove() {
         } else if (difficulty == 1) {
             correctnessPercentage = 0.7;
         } else {
-            correctnessPercentage = 0.99;
+            correctnessPercentage = 0.92;
         }
         // choose 
         var best = getBestMove(0, 1, grid.slice(), -1, recentMoves.slice());
@@ -93,6 +127,18 @@ function computerMove() {
             }
         }
         console.log("best move: " + cell);
+
+        // choose random number between 0 and 1 to determine if the computer will make a mistake
+        var mistake = Math.random();
+        if (mistake > correctnessPercentage) {
+            // make a mistake
+            var oldcell = cell;
+            cell = Math.floor(Math.random() * 9);
+            while (grid[cell] != 0 && cell != oldcell) {
+                cell = Math.floor(Math.random() * 9);
+            }
+        }
+
         addMove(cell);
 
         // turn = 1 - turn;
@@ -280,27 +326,33 @@ function updateGrid(){
         }
         document.getElementById("cell" + i).style.color = grid[i] == 1 ? "red" : "cyan";
         // set font size and make it bold
-        document.getElementById("cell" + i).style.fontSize = "40px";
+        document.getElementById("cell" + i).style.fontSize = "35px";
         document.getElementById("cell" + i).style.fontWeight = "bold";
         if (winner == -1){
             // remove background color
             document.getElementById("cell" + i).parentElement.style.backgroundColor = "transparent";
         }
 
-        if (recentMoves.length > 0) {
+        if (recentMoves.length > 4) {
             var num = recentMoves[0];
             if (grid[num] == 1) {
                 document.getElementById("cell" + num).style.color = "brown";
             } else if (grid[num] == 2) {
                 document.getElementById("cell" + num).style.color = "darkcyan";
             }
+            if (!document.getElementById("cell" + num).innerHTML.endsWith("*")) {
+                document.getElementById("cell" + num).innerHTML += "*";
+            }
 
             if (recentMoves.length > 1) {
-                var num = recentMoves[1];
-                if (grid[num] == 1) {
-                    document.getElementById("cell" + num).style.color = "brown";
-                } else if (grid[num] == 2) {
-                    document.getElementById("cell" + num).style.color = "darkcyan";
+                var num2 = recentMoves[1];
+                if (grid[num2] == 1) {
+                    document.getElementById("cell" + num2).style.color = "brown";
+                } else if (grid[num2] == 2) {
+                    document.getElementById("cell" + num2).style.color = "darkcyan";
+                }
+                if (!document.getElementById("cell" + num2).innerHTML.endsWith("*")) {
+                    document.getElementById("cell" + num2).innerHTML += "*";
                 }
             }
         } 
