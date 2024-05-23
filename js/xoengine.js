@@ -243,7 +243,10 @@ function getBestMove(depth, player, grid, original = -1, recentmoves) {
 
             
 
-function addMove(cell) {
+function addMove(cell, click = false) {
+    if (gamestate == 1 && /*not ur turn */  (mode == 1 && turn == 1 && click)) {
+        return;
+    }
     if (gamestate == 1 && 
         ( 
             grid[cell] == 0 
@@ -260,6 +263,15 @@ function addMove(cell) {
         checkWinner();
         turn = 1 - turn;
         updateGrid();
+        // play sound
+        if (turn == 1 || mode == 0) {
+            var audio = new Audio("sound/click.mp3");
+            audio.play();
+            }
+        else {
+            var audio = new Audio("sound/click2.mp3");
+            audio.play();
+        }
         if (mode == 1 && gamestate == 1 && turn == 1) {
             computerMove();
         }
@@ -307,6 +319,11 @@ function checkWinner() {
             document.getElementById("cell" + a).parentElement.parentElement.style.backgroundColor = "rgba(255, 255, 0, 0.553)";
             document.getElementById("cell" + b).parentElement.parentElement.style.backgroundColor = "rgba(255, 255, 0, 0.553)";
             document.getElementById("cell" + c).parentElement.parentElement.style.backgroundColor = "rgba(255, 255, 0, 0.553)";
+
+            // play sound
+            var audio = new Audio("sound/win.mp3");
+            audio.play();
+
             return;
         }
     }
@@ -395,6 +412,22 @@ function updateGrid(){
 function newGame() {
     startGame(mode);
     updateGrid();
+}
+
+function changeDifficultyVisibility(){
+    var radios = document.getElementsByName("players");
+    var mode = 1;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            mode = 1-i;
+            break;
+        }
+    }
+    if (mode == 1) {
+        document.getElementById("difficulty-part").style.display = "block";
+    } else {
+        document.getElementById("difficulty-part").style.display = "none";
+    }
 }
 
 async function delay(ms) {

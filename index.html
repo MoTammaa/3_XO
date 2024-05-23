@@ -88,6 +88,7 @@
             id="btnradio1"
             autocomplete="off"
             checked
+            onchange="changeDifficultyVisibility();"
           />
           <label
             class="btn btn-outline-success"
@@ -102,6 +103,7 @@
             name="players"
             id="btnradio2"
             autocomplete="off"
+            onchange="changeDifficultyVisibility();"
           />
           <label
             class="btn btn-outline-success"
@@ -116,65 +118,67 @@
         </div>
 
         <!-- difficulty -->
-        <p
-          style="
-            padding-right: 2rem;
-            padding-top: 1rem;
-            display: block;
-            font-size: min(5vw, 20px);
-          "
-        >
-          Choose Difficulty:
-        </p>
-        <div
-          class="btn-group"
-          role="group"
-          aria-label="Basic radio toggle button group"
-          style="padding-left: 1rem; padding-bottom: 1rem"
-        >
-          <br />
-          <input
-            type="radio"
-            class="btn-check"
-            name="difficulty"
-            id="btnradio3"
-            autocomplete="off"
-            checked
-          />
-          <label
-            class="btn btn-outline-success"
-            for="btnradio3"
-            style="font-size: min(5vw, 16px)"
-            >Easy</label
+        <div id="difficulty-part">
+          <p
+            style="
+              padding-right: 2rem;
+              padding-top: 1rem;
+              display: block;
+              font-size: min(5vw, 20px);
+            "
           >
+            Choose Difficulty:
+          </p>
+          <div
+            class="btn-group"
+            role="group"
+            aria-label="Basic radio toggle button group"
+            style="padding-left: 1rem; padding-bottom: 1rem"
+          >
+            <br />
+            <input
+              type="radio"
+              class="btn-check"
+              name="difficulty"
+              id="btnradio3"
+              autocomplete="off"
+              checked
+            />
+            <label
+              class="btn btn-outline-success"
+              for="btnradio3"
+              style="font-size: min(5vw, 16px)"
+              >Easy</label
+            >
 
-          <input
-            type="radio"
-            class="btn-check"
-            name="difficulty"
-            id="btnradio4"
-            autocomplete="off"
-          />
-          <label
-            class="btn btn-outline-warning"
-            for="btnradio4"
-            style="font-size: min(5vw, 16px)"
-            >Medium</label
-          >
+            <input
+              type="radio"
+              class="btn-check"
+              name="difficulty"
+              id="btnradio4"
+              autocomplete="off"
+            />
+            <label
+              class="btn btn-outline-warning"
+              for="btnradio4"
+              style="font-size: min(5vw, 16px)"
+              >Medium</label
+            >
 
-          <input
-            type="radio"
-            class="btn-check"
-            name="difficulty"
-            id="btnradio5"
-            autocomplete="off"
-          />
-          <label
-            class="btn btn-outline-danger"
-            for="btnradio5"
-            style="font-size: min(5vw, 16px)"
-            >Hard</label
-          >
+            <input
+              type="radio"
+              class="btn-check"
+              name="difficulty"
+              id="btnradio5"
+              autocomplete="off"
+            />
+            <label
+              class="btn btn-outline-danger"
+              for="btnradio5"
+              style="font-size: min(5vw, 16px)"
+              >Hard</label
+            >
+          </div>
         </div>
         <br />
 
@@ -253,7 +257,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(0);">
+              <button class="gridbtn" onclick="addMove(0,true);">
                 <span id="cell0">x1 --></span>
               </button>
             </div>
@@ -261,7 +265,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(1);">
+              <button class="gridbtn" onclick="addMove(1,true);">
                 <span id="cell1">x2 --></span>
               </button>
             </div>
@@ -269,7 +273,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(2);">
+              <button class="gridbtn" onclick="addMove(2,true);">
                 <span id="cell2">x3 --></span>
               </button>
             </div>
@@ -279,7 +283,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(3);">
+              <button class="gridbtn" onclick="addMove(3,true);">
                 <span id="cell3">x4 --></span>
               </button>
             </div>
@@ -287,7 +291,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(4);">
+              <button class="gridbtn" onclick="addMove(4,true);">
                 <span id="cell4">x5 --></span>
               </button>
             </div>
@@ -295,7 +299,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(5);">
+              <button class="gridbtn" onclick="addMove(5,true);">
                 <span id="cell5">x6 --></span>
               </button>
             </div>
@@ -305,7 +309,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(6);">
+              <button class="gridbtn" onclick="addMove(6,true);">
                 <span id="cell6">x7 --></span>
               </button>
             </div>
@@ -313,7 +317,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(7);">
+              <button class="gridbtn" onclick="addMove(7,true);">
                 <span id="cell7">x8 --></span>
               </button>
             </div>
@@ -321,7 +325,7 @@
               style="height: 20vh; min-width: 10vw; width: max(10vw, 30%)"
               class="col col-sm-1"
             >
-              <button class="gridbtn" onclick="addMove(8);">
+              <button class="gridbtn" onclick="addMove(8,true);">
                 <span id="cell8">x9 --></span>
               </button>
             </div>
