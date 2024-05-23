@@ -30,3 +30,13 @@
   background-color: rgba(178, 178, 178, 0.237) !important;
   transition: box-shadow 0.3s ease-in-out;
 }
+
+#thinkpic {
+  display: none;
+  width: max(10vw, 200px);
+  position: fixed;
+  top: 20%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
