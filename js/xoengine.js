@@ -294,9 +294,9 @@ function checkWinner() {
                 score2++;
             }
             // highlight the winning combination cells (parent of the cells)
-            document.getElementById("cell" + a).parentElement.style.backgroundColor = "yellow";
-            document.getElementById("cell" + b).parentElement.style.backgroundColor = "yellow";
-            document.getElementById("cell" + c).parentElement.style.backgroundColor = "yellow";
+            document.getElementById("cell" + a).parentElement.parentElement.style.backgroundColor = "rgba(255, 255, 0, 0.553)";
+            document.getElementById("cell" + b).parentElement.parentElement.style.backgroundColor = "rgba(255, 255, 0, 0.553)";
+            document.getElementById("cell" + c).parentElement.parentElement.style.backgroundColor = "rgba(255, 255, 0, 0.553)";
             return;
         }
     }
@@ -331,6 +331,7 @@ function updateGrid(){
         if (winner == -1){
             // remove background color
             document.getElementById("cell" + i).parentElement.style.backgroundColor = "transparent";
+            document.getElementById("cell" + i).parentElement.parentElement.style.backgroundColor = "transparent";
         }
 
         if (recentMoves.length > 4) {

@@ -1,0 +1,32 @@
+#grid {
+  /* width: 30vw;
+    height: 50vw; */
+  background-image: url("../images/tic-tac-toe.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+  display: block;
+}
+
+.gridbtn {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-radius: 15px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.gridbtn:hover {
+  box-shadow: 0 0 50px rgba(128, 128, 128, 0.54);
+  background-color: rgba(178, 178, 178, 0.237) !important;
+  transition: box-shadow 0.3s ease-in-out;
+}
